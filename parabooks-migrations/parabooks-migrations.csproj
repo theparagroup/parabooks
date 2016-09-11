@@ -49,16 +49,26 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="schema.cs" />
     <Compile Include="VersionTable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\paralib-net\paralib-common\paralib-common.csproj">
+      <Project>{101e2741-5a3d-460b-bdf4-f5e5bd27cf1c}</Project>
+      <Name>paralib-common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\paralib-net\paralib-migrations\paralib-migrations.csproj">
       <Project>{9fb29601-877a-4b69-bbc9-a40673ec1bec}</Project>
       <Name>paralib-migrations</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Chart.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
