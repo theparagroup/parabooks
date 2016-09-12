@@ -30,7 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\paralib-net-dependencies\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\paralib-net-dependencies\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,7 +47,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountType.cs" />
+    <Compile Include="BusinessForm.cs" />
+    <Compile Include="Ef\DbContext.cs" />
+    <Compile Include="Ef\EfAccount.cs" />
+    <Compile Include="Ef\EfAccountType.cs" />
+    <Compile Include="Ef\EfBusinessForm.cs" />
+    <Compile Include="Ef\EfEntry.cs" />
+    <Compile Include="Ef\EfMethod.cs" />
+    <Compile Include="Ef\EfNormal.cs" />
+    <Compile Include="Ef\EfTransaction.cs" />
+    <Compile Include="Ef\EfTransactionType.cs" />
+    <Compile Include="Entry.cs" />
+    <Compile Include="Logic\Account.cs" />
+    <Compile Include="Logic\AccountType.cs" />
+    <Compile Include="Logic\BusinessForm.cs" />
+    <Compile Include="Logic\Entry.cs" />
+    <Compile Include="Logic\Method.cs" />
+    <Compile Include="Logic\Normal.cs" />
+    <Compile Include="Logic\Transaction.cs" />
+    <Compile Include="Logic\TransactionType.cs" />
+    <Compile Include="Metadata\Account.cs" />
+    <Compile Include="Metadata\AccountType.cs" />
+    <Compile Include="Metadata\BusinessForm.cs" />
+    <Compile Include="Metadata\Entry.cs" />
+    <Compile Include="Metadata\Method.cs" />
+    <Compile Include="Metadata\Normal.cs" />
+    <Compile Include="Metadata\Transaction.cs" />
+    <Compile Include="Metadata\TransactionType.cs" />
+    <Compile Include="Method.cs" />
+    <Compile Include="Normal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\paralib-net\paralib-common\paralib-common.csproj">

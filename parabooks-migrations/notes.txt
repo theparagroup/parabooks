@@ -1,0 +1,44 @@
+--[step 2]
+account types:
+	asset: ar
+	income: rev?
+	liability: payroll
+
+accounts
+	ar: clients
+	rev: clients
+	asset: loan accounts
+	liability: loan accounts
+	asset: employee advance accounts
+
+PAYROLL TAXES HAVE TO BE SPLIT OUT (like invoices)
+	
+--[STEP 3]
+import type classes
+transaction type classes
+
+px8books_import_lines -> 	transactions
+							entries
+
+--[STEP 4]
+statements
+
+--[STEP 5]
+tax lines
+
+
+--[later improvements]
+refactor out code types
+	vendors
+	clients
+	employee
+refactor to only create account if account_type is specified (so i can use the same account for different vendors/employees eg "cell phones" not "joe's cell (page plus) )
+
+create vendors,clients,employees,invoices,etc
+
+create asset table that ties together:
+	asset account
+	accumlated deppreciation account
+	depreciation expense account
+OR
+entry_assets

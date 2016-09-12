@@ -68,7 +68,28 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Chart.txt" />
+    <EmbeddedResource Include="100000000 - Assets.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="200000000 - Liabilities.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="300000000 - Equity.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="400000000 - Operating Income.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="500000000 - Direct Costs.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="600000000 - Operating Expenses.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="700000000 - Non-Operating Income.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="800000000 - Non-Operating Expenses.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
