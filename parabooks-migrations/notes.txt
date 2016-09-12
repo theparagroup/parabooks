@@ -1,9 +1,9 @@
 --[step 2]
-account types:
-	asset: ar
-	income: rev?
-	liability: payroll
 
+
+PAYROLL TAXES HAVE TO BE SPLIT OUT (like invoices)
+	
+--[STEP 3]
 accounts
 	ar: clients
 	rev: clients
@@ -11,9 +11,7 @@ accounts
 	liability: loan accounts
 	asset: employee advance accounts
 
-PAYROLL TAXES HAVE TO BE SPLIT OUT (like invoices)
-	
---[STEP 3]
+
 import type classes
 transaction type classes
 
@@ -35,6 +33,8 @@ refactor out code types
 refactor to only create account if account_type is specified (so i can use the same account for different vendors/employees eg "cell phones" not "joe's cell (page plus) )
 
 create vendors,clients,employees,invoices,etc
+
+commissions as direct costs
 
 create asset table that ties together:
 	asset account

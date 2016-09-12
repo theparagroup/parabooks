@@ -22,11 +22,15 @@ namespace com.theparagroup.parabooks
         public const int TangibleAssets_CurrentAssets = 111000;
         public const int TangibleAssets_FixedAssets = 112000;
         public const int TangibleAssets_AccumulatedDepreciation = 113000;
-        public const int TangibleAssets_AccumulatedAmortization = 114300;
+        public const int TangibleAssets_AccumulatedAmortization = 114000;
+        public const int TangibleAssets_OtherAssets = 115000;
         public const int Assets_IntangibleAssets = 120000;
         public const int Liabilities = 200000;
+        public const int Liabilities_CurrentLiabilities = 210000;
+        public const int Liabilities_LongTermLiabilities = 220000;
         public const int Equity = 300000;
         public const int OperatingIncome = 400000;
+        public const int OperatingIncome_Revenue = 410000;
         public const int DirectCosts = 500000;
         public const int OperatingExpenses = 600000;
         public const int OperatingExpenses_GeneralExpenses = 610000;
