@@ -1,6 +1,5 @@
 --[step 2]
 
-
 PAYROLL TAXES HAVE TO BE SPLIT OUT (like invoices)
 	
 --[STEP 3]
@@ -26,6 +25,8 @@ tax lines
 
 
 --[later improvements]
+seperate canonical and non-canonical account types
+
 refactor out code types
 	vendors
 	clients
@@ -42,3 +43,5 @@ create asset table that ties together:
 	depreciation expense account
 OR
 entry_assets
+
+fix skip bug when generating nav properties

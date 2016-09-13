@@ -1,8 +1,8 @@
 ﻿SET IDENTITY_INSERT account_types ON;
 
-INSERT INTO account_types (id, number, canonical, name, normal_id, nominal)								VALUES (600000, '600-000-000', 1, 'Operating Expenses', 0, 1);
+INSERT INTO account_types (id, number, canonical_id, name, normal_id, nominal)								VALUES (600000, '600-000-000', 600, 'Operating Expenses', 0, 1);
 
-INSERT INTO account_types (id, parent_id, number, canonical, name)										VALUES (610000, 600000, '610-000-000', 1, 'General Expenses');
+INSERT INTO account_types (id, parent_id, number, canonical_id, name)										VALUES (610000, 600000, '610-000-000', 610, 'General Expenses');
 INSERT INTO account_types (id, parent_id, number, name)															VALUES (610110, 610000, '610-110-000', 'Services');
 INSERT INTO account_types (id, parent_id, number, name)																VALUES (610111, 610110, '610-111-000', 'Information Technology');
 INSERT INTO account_types (id, parent_id, number, name)																		VALUES (601, 610111, '610-110-010', 'Domains');
@@ -37,8 +37,8 @@ INSERT INTO account_types (id, parent_id, number, name)																VALUES (6
 INSERT INTO account_types (id, parent_id, number, name)																VALUES (610176, 610170, '610-176-000', 'FUTA (Employer''s Match)');
 
 
-INSERT INTO account_types (id, parent_id, number, canonical, name)											VALUES (680000, 600000, '680-000-000', 1, 'Depreciation Expense');
-INSERT INTO account_types (id, parent_id, number, canonical, name)											VALUES (690000, 600000, '690-000-000', 1, 'Amortization Expense');
+INSERT INTO account_types (id, parent_id, number, canonical_id, name)											VALUES (680000, 600000, '680-000-000', 680, 'Depreciation Expense');
+INSERT INTO account_types (id, parent_id, number, canonical_id, name)											VALUES (690000, 600000, '690-000-000', 690, 'Amortization Expense');
 
 
 

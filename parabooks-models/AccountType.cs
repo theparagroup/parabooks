@@ -12,7 +12,7 @@ namespace com.theparagroup.parabooks.models
 		public int? NormalId { get; set;}
 		public int? BusinessFormId { get; set;}
 		public int? MethodId { get; set;}
-		public bool? Canonical { get; set;}
+		public int? CanonicalId { get; set;}
 		public bool? Nominal { get; set;}
 		public bool? Contra { get; set;}
 		public bool? MethodRequired { get; set;}

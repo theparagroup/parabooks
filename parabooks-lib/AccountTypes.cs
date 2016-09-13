@@ -34,13 +34,13 @@ namespace com.theparagroup.parabooks
         public const int CurrentAssets_Saving = 111200;
         public const int CurrentAssets_AccountsReceivable = 111300;
         public const int CurrentAssets_EmployeeAdvances = 111400;
-        public const int CurrentAssets_NotesPayable = 111500;
-        public const int NotesPayable_LoansfromEquityHolders = 111510;
+        public const int CurrentAssets_NotesReceivable = 111500;
+        public const int NotesReceivable_LoanstoEquityHolders = 111510;
         public const int FixedAssets_Equipment = 112100;
         public const int Equipment_InformationTechnology = 112110;
         public const int OtherAssets_NotesPayable = 115100;
         public const int CurrentLiabilities_NotesPayable = 211000;
-        public const int CurrentLiabilities_LoanstoOfficers = 211100;
+        public const int CurrentLiabilities_NotesPayable_LoansfromEquityHolders = 211100;
         public const int CurrentLiabilities_Taxes = 212000;
         public const int Taxes_SalesTaxes = 212100;
         public const int Taxes_PayrollTaxes = 212200;
@@ -49,7 +49,7 @@ namespace com.theparagroup.parabooks
         public const int PayrollTaxes_FUTA = 212230;
         public const int PayrollTaxes_IncomeTaxesWithheld = 212240;
         public const int LongTermLiabilities_NotesPayable = 221000;
-        public const int NotesPayable_LoanstoOfficers = 221100;
+        public const int LongTermLiabilities_NotesPayable_LoansfromEquityHolders = 221100;
         public const int GeneralExpenses_Services = 610110;
         public const int Services_InformationTechnology = 610111;
         public const int Services_PayrollFees = 610112;
@@ -71,8 +71,8 @@ namespace com.theparagroup.parabooks
         public const int Payroll_Wages = 610171;
         public const int Payroll_FringeBenefits = 610172;
         public const int Payroll_WorkersCompensation = 610173;
-        public const int Payroll_FICA_Match = 610174;
-        public const int Payroll_SUTA_Match = 610175;
-        public const int Payroll_FUTA_Match = 610176;
+        public const int Payroll_FICAMatch = 610174;
+        public const int Payroll_SUTAMatch = 610175;
+        public const int Payroll_FUTAMatch = 610176;
     }
 }

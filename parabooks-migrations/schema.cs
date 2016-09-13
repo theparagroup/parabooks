@@ -2,6 +2,7 @@
 using FluentMigrator;
 using com.paralib.Migrations;
 using com.paralib.DataAnnotations;
+using System.Collections.Generic;
 
 namespace com.theparagroup.parabooks.migrations
 {
@@ -88,6 +89,7 @@ namespace com.theparagroup.parabooks.migrations
                 .WithColumn("business_form_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("business_forms", "id")
                 .WithColumn("method_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("methods", "id")
                 .WithColumn("canonical").AsParaType(ParaTypes.Bool).Nullable()
+                .WithColumn("canonical_id").AsParaType(ParaTypes.Int32).Nullable()
                 .WithColumn("nominal").AsParaType(ParaTypes.Bool).Nullable()
                 .WithColumn("contra").AsParaType(ParaTypes.Bool).Nullable()
                 .WithColumn("method_required").AsParaType(ParaTypes.Bool).Nullable()
@@ -101,6 +103,10 @@ namespace com.theparagroup.parabooks.migrations
             Execute.EmbeddedScript("600000000 - Operating Expenses.sql");
             Execute.EmbeddedScript("700000000 - Non-Operating Income.sql");
             Execute.EmbeddedScript("800000000 - Non-Operating Expenses.sql");
+
+            Execute.Sql("update account_types set canonical=1 where canonical_id is not null");
+
+            Execute.WithConnection(DenormalizeAccountTypes);
 
 
             Create.Table("accounts")
@@ -117,14 +123,17 @@ namespace com.theparagroup.parabooks.migrations
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
                 .WithColumn("name").AsParaType(ParaTypes.Name);
             {
-                Insert.IntoTable("transaction_types").Row(new { id = 0, name = "SPLIT" }); //splits have child transactions
-                Insert.IntoTable("transaction_types").Row(new { id = 1, name = "LOANEXP" });
+                Insert.IntoTable("transaction_types").Row(new { id = 1, name = "SPLIT" }); //splits have child transactions
+                Insert.IntoTable("transaction_types").Row(new { id = 2, name = "LOANEXP" });
+                Insert.IntoTable("transaction_types").Row(new { id = 3, name = "LOAN" });
+                Insert.IntoTable("transaction_types").Row(new { id = 4, name = "EXP" });
+                Insert.IntoTable("transaction_types").Row(new { id = 5, name = "ASS" });
+                Insert.IntoTable("transaction_types").Row(new { id = 6, name = "INT" });
             }
 
 
             Create.Table("transactions")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                .WithColumn("parent_id").AsParaType(ParaTypes.Key).ForeignKey("transactions", "id")
                 .WithColumn("transaction_type_id").AsParaType(ParaTypes.Key).ForeignKey("transaction_types", "id")
                 .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
                 .WithColumn("date").AsParaType(ParaTypes.DateTime)
@@ -138,5 +147,65 @@ namespace com.theparagroup.parabooks.migrations
 
 
         }
+
+        protected static void DenormalizeAccountTypes(System.Data.IDbConnection connection, System.Data.IDbTransaction transaction)
+        {
+            var cmd = connection.CreateCommand();
+            cmd.Transaction = transaction;
+            cmd.CommandText = "select * from account_types where parent_id is null";
+            var reader = cmd.ExecuteReader();
+            var ids = new List<int>();
+            while (reader.Read()) { ids.Add((int)reader["id"]); }
+            reader.Close();
+
+            foreach (int id in ids)
+            {
+                DenormalizeAccountTypes(connection, transaction, id);
+            }
+
+        }
+
+        private class AccountType
+        {
+            public int Id;
+            public int Nid;
+            public int Cid;
+        }
+
+        protected static void DenormalizeAccountTypes(System.Data.IDbConnection connection, System.Data.IDbTransaction transaction, int parentId)
+        {
+            var cmd = connection.CreateCommand();
+            cmd.Transaction = transaction;
+            cmd.CommandText = $"select a.id id, a.normal_id a_nid, a.canonical_id a_cid, a.parent_id a_pid, p.normal_id p_nid, p.canonical_id p_cid from account_types a inner join account_types p on a.parent_id=p.id where a.parent_id={parentId}";
+
+            var update = connection.CreateCommand();
+            update.Transaction = transaction;
+
+            var reader = cmd.ExecuteReader();
+            var ats = new List<AccountType>();
+            while (reader.Read())
+            {
+                var at = new AccountType();
+                at.Id = (int)reader["id"];
+                at.Nid = (int)reader["p_nid"];
+                at.Cid = (int)reader["p_cid"];
+                ats.Add(at);
+            }
+            reader.Close();
+
+            foreach (var at in ats)
+            {
+                update.CommandText = $"update account_types set normal_id={at.Nid} where id={at.Id} and normal_id is null";
+                update.ExecuteNonQuery();
+
+                update.CommandText = $"update account_types set canonical_id={at.Cid} where id={at.Id} and canonical_id is null";
+                update.ExecuteNonQuery();
+
+                DenormalizeAccountTypes(connection, transaction, at.Id);
+            }
+
+        }
+
+
     }
 }

@@ -49,8 +49,8 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Display(Name="Method Id")]
 		public object MethodId;
 
-		[Display(Name="Canonical")]
-		public object Canonical;
+		[Display(Name="Canonical Id")]
+		public object CanonicalId;
 
 		[Display(Name="Nominal")]
 		public object Nominal;
