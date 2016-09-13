@@ -47,13 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountTypes.cs" />
-    <Compile Include="CanonicalAccountTypes.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Transactors\InvalidAccountException.cs" />
-    <Compile Include="Transactors\LOAN.cs" />
-    <Compile Include="Transactors\LOANEXP.cs" />
-    <Compile Include="Transactors\Transactor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\paralib-net\paralib-common\paralib-common.csproj">
