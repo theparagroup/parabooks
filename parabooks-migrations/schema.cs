@@ -120,17 +120,9 @@ namespace com.theparagroup.parabooks.migrations
 
 
             Create.Table("transaction_types")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
+                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
                 .WithColumn("name").AsParaType(ParaTypes.Name);
-            {
-                Insert.IntoTable("transaction_types").Row(new { id = 1, name = "SPLIT" }); //splits have child transactions
-                Insert.IntoTable("transaction_types").Row(new { id = 2, name = "LOANEXP" });
-                Insert.IntoTable("transaction_types").Row(new { id = 3, name = "LOAN" });
-                Insert.IntoTable("transaction_types").Row(new { id = 4, name = "EXP" });
-                Insert.IntoTable("transaction_types").Row(new { id = 5, name = "ASS" });
-                Insert.IntoTable("transaction_types").Row(new { id = 6, name = "INT" });
-            }
-
+ 
 
             Create.Table("transactions")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
@@ -142,8 +134,10 @@ namespace com.theparagroup.parabooks.migrations
             Create.Table("entries")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
                 .WithColumn("transaction_id").AsParaType(ParaTypes.Key).ForeignKey("transactions", "id")
+                .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
                 .WithColumn("account_id").AsParaType(ParaTypes.Key).ForeignKey("accounts", "id")
-                .WithColumn("amount").AsParaType(ParaTypes.Decimal);
+                .WithColumn("amount").AsParaType(ParaTypes.Decimal)
+                .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
 
 
         }

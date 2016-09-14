@@ -1,21 +1,15 @@
 --[step 2]
 
-PAYROLL TAXES HAVE TO BE SPLIT OUT (like invoices)
+payroll net: advances?
+invoice: subtotal, sales tax 
 	
 --[STEP 3]
-accounts
-	ar: clients
-	rev: clients
-	asset: loan accounts
-	liability: loan accounts
-	asset: employee advance accounts
+get all transactions working
+reports
+finish spreadsheet
 
-
-import type classes
-transaction type classes
-
-px8books_import_lines -> 	transactions
-							entries
+refine by additional accounts:
+	employees: advances, payroll, taxes, etc
 
 --[STEP 4]
 statements
@@ -44,4 +38,12 @@ create asset table that ties together:
 OR
 entry_assets
 
+cash/accrual support (trans methods, ar accounts)
+
 fix skip bug when generating nav properties
+
+verify account canonical types needs to walk the hierarchy (denormalize in memory)
+
+unaka credits
+
+automaticall create proper accounts for all account types
