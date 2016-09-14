@@ -1,8 +1,18 @@
 --[step 2]
 
+get rid of knownaccounts
+
+format dates and currencies
+
 start-up costs
+
+fitw,ss,mc -> gross
 payroll net: advances?
+
 invoice: subtotal, sales tax 
+
+move payroll logic into transactor
+
 	
 --[STEP 3]
 finish spreadsheet
@@ -26,9 +36,11 @@ refactor out code types
 	employee
 refactor to only create account if account_type is specified (so i can use the same account for different vendors/employees eg "cell phones" not "joe's cell (page plus) )
 
-create vendors,clients,employees,invoices,etc
+create vendors,clients,employees,invoices,payroll runs, etc
 
 commissions as direct costs
+
+depreciation, 179
 
 create asset table that ties together:
 	asset account
@@ -39,10 +51,45 @@ entry_assets
 
 cash/accrual support (trans methods, ar accounts)
 
-fix skip bug when generating nav properties
+fix skip bug when generating nav properties (skip is not honored)
 
 verify account canonical types needs to walk the hierarchy (denormalize in memory)
+review transactors to use most appropriate set of canonicals
 
 unaka credits
 
-automaticall create proper accounts for all account types
+
+transactors:
+	indicate allowed types via interface
+	documentation/tax wiki integration
+
+transaction definition specification? xml?
+	inputs: account types, accounts, amounts
+	operations: debits and credits
+	
+	
+	
+	
+	
+=================================================================
+select e.account_id,a.name, sum(e.amount) from transactions t left outer join entries e on e.transaction_id=t.id inner join accounts a on e.account_id=a.id
+group by e.account_id,a.name 
+order by a.name
+
+
+
+select t.*,e.*,a.* 
+
+from transactions t 
+inner join 
+entries e on e.transaction_id=t.id 
+inner join accounts 
+a on e.account_id=a.id
+
+where e.account_id in (447,450)
+
+order by t.reference
+
+
+	
+	
