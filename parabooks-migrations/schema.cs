@@ -113,7 +113,7 @@ namespace com.theparagroup.parabooks.migrations
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
                 .WithColumn("parent_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("accounts", "id")
                 .WithColumn("account_type_id").AsParaType(ParaTypes.Key).ForeignKey("account_types", "id")
-                .WithColumn("linking").AsParaType(ParaTypes.Bool)
+                .WithColumn("linked").AsParaType(ParaTypes.Bool)
                 .WithColumn("number").AsParaType(ParaTypes.Name)
                 .WithColumn("name").AsParaType(ParaTypes.Name)
                 .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();

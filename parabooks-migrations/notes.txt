@@ -1,11 +1,10 @@
 --[step 2]
 
+start-up costs
 payroll net: advances?
 invoice: subtotal, sales tax 
 	
 --[STEP 3]
-get all transactions working
-reports
 finish spreadsheet
 
 refine by additional accounts:
