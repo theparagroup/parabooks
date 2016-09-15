@@ -1,17 +1,11 @@
 --[step 2]
 
-get rid of knownaccounts
+startup costs = ! fixed assets
 
-format dates and currencies
-
-start-up costs
-
-fitw,ss,mc -> gross
-payroll net: advances?
-
+asset depreciation/179 expense
 invoice: subtotal, sales tax 
 
-move payroll logic into transactor
+refactor out special columns from import lines in step1
 
 	
 --[STEP 3]

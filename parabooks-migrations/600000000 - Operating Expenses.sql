@@ -13,7 +13,7 @@ INSERT INTO account_types (id, parent_id, number, name)																VALUES (6
 INSERT INTO account_types (id, parent_id, number, name)																VALUES (610113, 610110, '610-113-000', 'Financial');
 INSERT INTO account_types (id, parent_id, number, name)																		VALUES (605, 610113, '610-113-010', 'Bank Fees');
 INSERT INTO account_types (id, parent_id, number, name)																		VALUES (606, 610113, '610-113-010', 'Wire Transfer Fees');
-INSERT INTO account_types (id, parent_id, number, name)																		VALUES (607, 610113, '610-113-010', 'Credit Care Processing Fees');
+INSERT INTO account_types (id, parent_id, number, name)																		VALUES (607, 610113, '610-113-010', 'Credit Card Processing Fees');
 INSERT INTO account_types (id, parent_id, number, name)															VALUES (610120, 610000, '610-120-000', 'Rent');
 INSERT INTO account_types (id, parent_id, number, name)																VALUES (610121, 610120, '610-121-000', 'Mail Boxes');
 INSERT INTO account_types (id, parent_id, number, name)															VALUES (610130, 610000, '610-130-000', 'Telephone');
