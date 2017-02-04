@@ -12,14 +12,17 @@ namespace com.theparagroup.parabooks.migrations
         public override void Down()
         {
 
+
             Delete.Table("entries");
             Delete.Table("transactions");
             Delete.Table("transaction_types");
             Delete.Table("accounts");
+            Delete.Table("account_type_business_forms");
             Delete.Table("account_types");
             Delete.Table("methods");
             Delete.Table("normals");
             Delete.Table("business_forms");
+            Delete.Table("modules");
 
             //entry_expense
             //vendors
@@ -54,12 +57,21 @@ namespace com.theparagroup.parabooks.migrations
 
         public override void Up()
         {
+            Create.Table("modules")
+                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
+                .WithColumn("name").AsParaType(ParaTypes.Name);
+            {
+                Insert.IntoTable("modules").Row(new { id = 0, name = "Parabooks" });
+                Insert.IntoTable("modules").Row(new { id = 1, name = "PX8 Books" });
+            }
+
             Create.Table("business_forms")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
                 .WithColumn("name").AsParaType(ParaTypes.Name);
             {
-                Insert.IntoTable("business_forms").Row(new { id = 0, name = "Sole Proprietorship/Parnership" });
-                Insert.IntoTable("business_forms").Row(new { id = 1, name = "Corporation" });
+                Insert.IntoTable("business_forms").Row(new { id = 0, name = "Sole Proprietorship" });
+                Insert.IntoTable("business_forms").Row(new { id = 1, name = "Partnership" });
+                Insert.IntoTable("business_forms").Row(new { id = 2, name = "Corporation" });
             }
 
             Create.Table("normals")
@@ -78,22 +90,70 @@ namespace com.theparagroup.parabooks.migrations
                 Insert.IntoTable("methods").Row(new { id = 1, name = "Accrual" });
             }
 
-
             Create.Table("account_types")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                .WithColumn("guid").AsParaType(ParaTypes.Guid).Nullable()
                 .WithColumn("parent_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("account_types", "id")
-                .WithColumn("number").AsParaType(ParaTypes.Name)
+                .WithColumn("number").AsParaType(ParaTypes.Name).Nullable()
                 .WithColumn("name").AsParaType(ParaTypes.Name)
                 .WithColumn("description").AsParaType(ParaTypes.Description).Nullable()
                 .WithColumn("normal_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("normals", "id")
-                .WithColumn("business_form_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("business_forms", "id")
-                .WithColumn("method_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("methods", "id")
-                .WithColumn("canonical").AsParaType(ParaTypes.Bool).Nullable()
-                .WithColumn("canonical_id").AsParaType(ParaTypes.Int32).Nullable()
-                .WithColumn("nominal").AsParaType(ParaTypes.Bool).Nullable()
-                .WithColumn("contra").AsParaType(ParaTypes.Bool).Nullable()
-                .WithColumn("method_required").AsParaType(ParaTypes.Bool).Nullable()
-                .WithColumn("business_form_required").AsParaType(ParaTypes.Bool).Nullable();
+                .WithColumn("nominal").AsParaType(ParaTypes.Bool).Nullable() //temporary accounts
+                .WithColumn("contra").AsParaType(ParaTypes.Bool).WithDefaultValue(false) //contra to parent account type or parent account?
+                .WithColumn("method_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("methods", "id") //null means 'all methods'
+                .WithColumn("module_id").AsParaType(ParaTypes.Key).ForeignKey("modules", "id").WithDefaultValue(0);
+
+            //non-core modules must use GUIDs to identify account types
+            Execute.Sql("ALTER TABLE account_types ADD CHECK ( (module_id=0 AND guid is null) OR (module_id<>0 AND guid is not null) )");
+
+            //TODO assign guids to core and enable unique constraint on guid
+
+            //this table restricts account types to certain business forms
+            Create.Table("account_type_business_forms")
+                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("account_types", "id")
+                    .WithColumn("business_form_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("business_forms", "id");
+
+
+            Create.Table("accounts")
+                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("account_types", "id")
+                    .WithColumn("account_id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                    .WithColumn("parent_account_type_id").AsParaType(ParaTypes.Key).Nullable()
+                    .WithColumn("parent_account_id").AsParaType(ParaTypes.Key).Nullable()
+                    .WithColumn("virtual").AsParaType(ParaTypes.Bool) //a folder
+                    .WithColumn("number").AsParaType(ParaTypes.Name).Nullable()
+                    .WithColumn("name").AsParaType(ParaTypes.Name)
+                    .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
+
+            Create.ForeignKey("FK_accounts_to_accounts2").FromTable("accounts").ForeignColumns("parent_account_type_id", "parent_account_id").ToTable("accounts").PrimaryColumns("account_type_id", "account_id");
+
+            Create.Table("transaction_types")
+                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                .WithColumn("guid").AsParaType(ParaTypes.Guid).Nullable()
+                .WithColumn("name").AsParaType(ParaTypes.Name)
+                .WithColumn("module_id").AsParaType(ParaTypes.Key).ForeignKey("modules","id");
+
+            //non-core modules must use GUIDs to identify transaction types
+            Execute.Sql("ALTER TABLE transaction_types ADD CHECK ( (module_id=0 AND guid is null) OR (module_id<>0 AND guid is not null) )");
+
+
+            Create.Table("transactions")
+                    .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                    .WithColumn("transaction_type_id").AsParaType(ParaTypes.Key).ForeignKey("transaction_types", "id")
+                    .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
+                    .WithColumn("date").AsParaType(ParaTypes.DateTime)
+                    .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
+
+            Create.Table("entries")
+                    .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                    .WithColumn("transaction_id").AsParaType(ParaTypes.Key).ForeignKey("transactions", "id")
+                    .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
+                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key)
+                    .WithColumn("account_id").AsParaType(ParaTypes.Key)
+                    .WithColumn("amount").AsParaType(ParaTypes.Decimal)
+                    .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
+
+            Create.ForeignKey("FK_entries_to_accounts").FromTable("entries").ForeignColumns("account_type_id", "account_id").ToTable("accounts").PrimaryColumns("account_type_id", "account_id");
+
 
             Execute.EmbeddedScript("100000000 - Assets.sql");
             Execute.EmbeddedScript("200000000 - Liabilities.sql");
@@ -104,41 +164,9 @@ namespace com.theparagroup.parabooks.migrations
             Execute.EmbeddedScript("700000000 - Non-Operating Income.sql");
             Execute.EmbeddedScript("800000000 - Non-Operating Expenses.sql");
 
-            Execute.Sql("update account_types set canonical=1 where canonical_id is not null");
-
             Execute.WithConnection(DenormalizeAccountTypes);
 
-
-            Create.Table("accounts")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                .WithColumn("parent_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("accounts", "id")
-                .WithColumn("account_type_id").AsParaType(ParaTypes.Key).ForeignKey("account_types", "id")
-                .WithColumn("linked").AsParaType(ParaTypes.Bool)
-                .WithColumn("number").AsParaType(ParaTypes.Name)
-                .WithColumn("name").AsParaType(ParaTypes.Name)
-                .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
-
-
-            Create.Table("transaction_types")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                .WithColumn("name").AsParaType(ParaTypes.Name);
- 
-
-            Create.Table("transactions")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                .WithColumn("transaction_type_id").AsParaType(ParaTypes.Key).ForeignKey("transaction_types", "id")
-                .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
-                .WithColumn("date").AsParaType(ParaTypes.DateTime)
-                .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
-
-            Create.Table("entries")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                .WithColumn("transaction_id").AsParaType(ParaTypes.Key).ForeignKey("transactions", "id")
-                .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
-                .WithColumn("account_id").AsParaType(ParaTypes.Key).ForeignKey("accounts", "id")
-                .WithColumn("amount").AsParaType(ParaTypes.Decimal)
-                .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
-
+            return;
 
         }
 
@@ -162,15 +190,15 @@ namespace com.theparagroup.parabooks.migrations
         private class AccountType
         {
             public int Id;
-            public int Nid;
-            public int Cid;
+            public int NormalId;
+            public bool Nominal;
         }
 
         protected static void DenormalizeAccountTypes(System.Data.IDbConnection connection, System.Data.IDbTransaction transaction, int parentId)
         {
             var cmd = connection.CreateCommand();
             cmd.Transaction = transaction;
-            cmd.CommandText = $"select a.id id, a.normal_id a_nid, a.canonical_id a_cid, a.parent_id a_pid, p.normal_id p_nid, p.canonical_id p_cid from account_types a inner join account_types p on a.parent_id=p.id where a.parent_id={parentId}";
+            cmd.CommandText = $"select a.id id, a.normal_id nid, a.nominal n, a.parent_id pid, p.normal_id pnid, p.nominal pn from account_types a inner join account_types p on a.parent_id=p.id where a.parent_id={parentId}";
 
             var update = connection.CreateCommand();
             update.Transaction = transaction;
@@ -181,18 +209,18 @@ namespace com.theparagroup.parabooks.migrations
             {
                 var at = new AccountType();
                 at.Id = (int)reader["id"];
-                at.Nid = (int)reader["p_nid"];
-                at.Cid = (int)reader["p_cid"];
+                at.NormalId = (int)reader["pnid"];
+                at.Nominal = (bool)reader["pn"];
                 ats.Add(at);
             }
             reader.Close();
 
             foreach (var at in ats)
             {
-                update.CommandText = $"update account_types set normal_id={at.Nid} where id={at.Id} and normal_id is null";
+                update.CommandText = $"update account_types set normal_id={at.NormalId} where id={at.Id} and normal_id is null";
                 update.ExecuteNonQuery();
 
-                update.CommandText = $"update account_types set canonical_id={at.Cid} where id={at.Id} and canonical_id is null";
+                update.CommandText = $"update account_types set nominal={(at.Nominal?1:0)} where id={at.Id} and nominal is null";
                 update.ExecuteNonQuery();
 
                 DenormalizeAccountTypes(connection, transaction, at.Id);
@@ -202,4 +230,49 @@ namespace com.theparagroup.parabooks.migrations
 
 
     }
+
+
+    /*
+    [Migration(000000000001)]
+    public class InitialSchema : Migration
+    {
+        public override void Down()
+        {
+            int x = 999999999;
+            Delete.Table("accounts");
+            Delete.Table("account_types");
+            Delete.Table("modules");
+        }
+
+        public override void Up()
+        {
+            Create.Table("modules")
+                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
+                .WithColumn("name").AsParaType(ParaTypes.Name);
+
+
+            Create.Table("account_types")
+                .WithColumn("module_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("modules","id")
+                .WithColumn("canonical_id").AsParaType(ParaTypes.Key).PrimaryKey()
+                .WithColumn("parent_module_id").AsParaType(ParaTypes.Key).Nullable()
+                .WithColumn("parent_canonical_id").AsParaType(ParaTypes.Key).Nullable()
+                .WithColumn("name").AsParaType(ParaTypes.Name);
+
+            Create.ForeignKey("FK_account_types_to_account_types").FromTable("account_types").ForeignColumns("parent_module_id", "parent_canonical_id").ToTable("account_types").PrimaryColumns("module_id", "canonical_id");
+
+
+            Create.Table("accounts")
+                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
+                .WithColumn("module_id").AsParaType(ParaTypes.Key)
+                .WithColumn("canonical_id").AsParaType(ParaTypes.Key)
+                .WithColumn("name").AsParaType(ParaTypes.Name);
+
+            Create.ForeignKey("FK_accounts_to_account_types").FromTable("accounts").ForeignColumns("module_id", "canonical_id").ToTable("account_types").PrimaryColumns("module_id", "canonical_id");
+
+
+
+        }
+    }*/
+
+
 }

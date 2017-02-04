@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paralib-migrations", "..\pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "parabooks-models", "parabooks-models\parabooks-models.csproj", "{DF6A5424-CC43-4C05-BB3B-9F0E1A0EBD77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "parabooks-test", "parabooks-test\parabooks-test.csproj", "{54BE7C3F-915B-4CB4-AD73-38D15A05543B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{DF6A5424-CC43-4C05-BB3B-9F0E1A0EBD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF6A5424-CC43-4C05-BB3B-9F0E1A0EBD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF6A5424-CC43-4C05-BB3B-9F0E1A0EBD77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54BE7C3F-915B-4CB4-AD73-38D15A05543B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54BE7C3F-915B-4CB4-AD73-38D15A05543B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54BE7C3F-915B-4CB4-AD73-38D15A05543B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54BE7C3F-915B-4CB4-AD73-38D15A05543B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
