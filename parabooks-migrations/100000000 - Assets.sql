@@ -25,17 +25,18 @@ SET IDENTITY_INSERT account_types OFF;
 
 SET IDENTITY_INSERT accounts ON;
 --Assets/Tangible/Current/Checking
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (1111, 10, 1, 'General'); 
-	INSERT INTO accounts (account_type_id, account_id, parent_account_type_id, parent_account_id, virtual, name) VALUES (1111, 11, 1111, 10, 0, 'First Tennessee'); --non-virtual test
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (1111, 20, 1, 'Payroll');
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (10100, 1111, 1, 'General'); 
+	INSERT INTO accounts (id, account_type_id, parent_id, virtual, name) VALUES (10110, 1111, 10100, 0, 'First Tennessee'); --non-virtual test
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (10200, 1111, 1, 'Payroll');
 
 --Assets/Tangible/Current/Notes Receivable
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (1115, 10, 1, 'Loans to Equity Holders'); 
-	INSERT INTO accounts (account_type_id, account_id, parent_account_type_id, parent_account_id, virtual, name) VALUES (113, 11, 1115, 10, 0, 'Accumulated Loan'); --link test 
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (10300, 1115, 1, 'Loans to Equity Holders'); 
+	INSERT INTO accounts (id, account_type_id, parent_id, virtual, name) VALUES (10310, 113, 10300, 0, 'Accumulated Loan'); --link test 
+		INSERT INTO accounts (id, account_type_id, parent_id, virtual, name) VALUES (10311, 113, 10310, 0, 'Accumulated Loan2'); --link test 
 
 --Assets/Tangible/Fixed/Equipment
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (1121, 10, 1, 'Hardware'); 
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (1121, 20, 1, 'Software'); 
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (10400, 1121, 1, 'Hardware'); 
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (10500, 1121, 1, 'Software'); 
 
 SET IDENTITY_INSERT accounts OFF;
 

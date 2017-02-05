@@ -43,6 +43,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 		public object Description;
 
 		[Display(Name="Normal Id")]
+		[Required(ErrorMessage="Normal Id is required")]
 		public object NormalId;
 
 		[Display(Name="Nominal")]

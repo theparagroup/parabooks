@@ -108,6 +108,8 @@ namespace com.theparagroup.parabooks.migrations
 
             //TODO assign guids to core and enable unique constraint on guid
 
+            //TODO make normal_id, nominal non-null (after load)
+
             //this table restricts account types to certain business forms
             Create.Table("account_type_business_forms")
                     .WithColumn("account_type_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("account_types", "id")
@@ -115,16 +117,13 @@ namespace com.theparagroup.parabooks.migrations
 
 
             Create.Table("accounts")
-                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("account_types", "id")
-                    .WithColumn("account_id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
-                    .WithColumn("parent_account_type_id").AsParaType(ParaTypes.Key).Nullable()
-                    .WithColumn("parent_account_id").AsParaType(ParaTypes.Key).Nullable()
+                    .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
+                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key).ForeignKey("account_types", "id")
+                    .WithColumn("parent_id").AsParaType(ParaTypes.Key).Nullable().ForeignKey("accounts", "id")
                     .WithColumn("virtual").AsParaType(ParaTypes.Bool) //a folder
                     .WithColumn("number").AsParaType(ParaTypes.Name).Nullable()
                     .WithColumn("name").AsParaType(ParaTypes.Name)
                     .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
-
-            Create.ForeignKey("FK_accounts_to_accounts2").FromTable("accounts").ForeignColumns("parent_account_type_id", "parent_account_id").ToTable("accounts").PrimaryColumns("account_type_id", "account_id");
 
             Create.Table("transaction_types")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
@@ -147,12 +146,9 @@ namespace com.theparagroup.parabooks.migrations
                     .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()
                     .WithColumn("transaction_id").AsParaType(ParaTypes.Key).ForeignKey("transactions", "id")
                     .WithColumn("reference").AsParaType(ParaTypes.Int32).Nullable()
-                    .WithColumn("account_type_id").AsParaType(ParaTypes.Key)
-                    .WithColumn("account_id").AsParaType(ParaTypes.Key)
+                    .WithColumn("account_id").AsParaType(ParaTypes.Key).ForeignKey("accounts","id")
                     .WithColumn("amount").AsParaType(ParaTypes.Decimal)
                     .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
-
-            Create.ForeignKey("FK_entries_to_accounts").FromTable("entries").ForeignColumns("account_type_id", "account_id").ToTable("accounts").PrimaryColumns("account_type_id", "account_id");
 
 
             Execute.EmbeddedScript("100000000 - Assets.sql");
@@ -165,6 +161,9 @@ namespace com.theparagroup.parabooks.migrations
             Execute.EmbeddedScript("800000000 - Non-Operating Expenses.sql");
 
             Execute.WithConnection(DenormalizeAccountTypes);
+
+            Alter.Table("account_types").AlterColumn("nominal").AsParaType(ParaTypes.Bool).NotNullable();
+            Alter.Table("account_types").AlterColumn("normal_id").AsParaType(ParaTypes.Key).NotNullable();
 
             return;
 

@@ -10,7 +10,7 @@ namespace com.theparagroup.parabooks.models
 		public string Number { get; set;}
 		public string Name { get; set;}
 		public string Description { get; set;}
-		public int? NormalId { get; set;}
+		public int NormalId { get; set;}
 		public bool Nominal { get; set;}
 		public bool Contra { get; set;}
 		public int? MethodId { get; set;}

@@ -51,8 +51,6 @@
     <Compile Include="AccountType.cs" />
     <Compile Include="AccountTypeBusinessForm.cs" />
     <Compile Include="BusinessForm.cs" />
-    <Compile Include="Custom\EfAccount.cs" />
-    <Compile Include="Custom\EfEntry.cs" />
     <Compile Include="Ef\DbContext.cs" />
     <Compile Include="Ef\EfAccount.cs" />
     <Compile Include="Ef\EfAccountType.cs" />

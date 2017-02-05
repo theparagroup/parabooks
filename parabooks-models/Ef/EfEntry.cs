@@ -7,6 +7,8 @@ namespace com.theparagroup.parabooks.models.Ef
 {
 	public partial class EfEntry:Entry
 	{
+		[ForeignKey("AccountId")]
+		public virtual EfAccount Account { get; set;}
 		[ForeignKey("TransactionId")]
 		public virtual EfTransaction Transaction { get; set;}
 	}

@@ -30,10 +30,6 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Display(Name="Reference")]
 		public object Reference;
 
-		[Display(Name="Account Type Id")]
-		[Required(ErrorMessage="Account Type Id is required")]
-		public object AccountTypeId;
-
 		[Display(Name="Account Id")]
 		[Required(ErrorMessage="Account Id is required")]
 		public object AccountId;

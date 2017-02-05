@@ -19,20 +19,16 @@ namespace com.theparagroup.parabooks.models.Metadata
 	{
 
 		[Key, Column(Order = 0)]
+		[Display(Name="Id")]
+		[Required(ErrorMessage="Id is required")]
+		public object Id;
+
 		[Display(Name="Account Type Id")]
 		[Required(ErrorMessage="Account Type Id is required")]
 		public object AccountTypeId;
 
-		[Key, Column(Order = 1)]
-		[Display(Name="Account Id")]
-		[Required(ErrorMessage="Account Id is required")]
-		public object AccountId;
-
-		[Display(Name="Parent Account Type Id")]
-		public object ParentAccountTypeId;
-
-		[Display(Name="Parent Account Id")]
-		public object ParentAccountId;
+		[Display(Name="Parent Id")]
+		public object ParentId;
 
 		[Display(Name="Virtual")]
 		[Required(ErrorMessage="Virtual is required")]

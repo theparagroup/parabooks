@@ -20,7 +20,7 @@ namespace com.theparagroup.parabooks.models
         {
 
             var parentId = accountType?.Id;
-            var accountTypes = (from at in db.AccountTypes where at.Parent.Id==parentId select at).ToList();
+            var accountTypes = (from at in db.AccountTypes where at.Parent.Id == parentId select at).ToList();
 
             foreach (var at in accountTypes)
             {

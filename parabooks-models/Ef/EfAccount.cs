@@ -9,5 +9,11 @@ namespace com.theparagroup.parabooks.models.Ef
 	{
 		[ForeignKey("AccountTypeId")]
 		public virtual EfAccountType AccountType { get; set;}
+		[ForeignKey("ParentId")]
+		public virtual EfAccount Parent { get; set;}
+		[InverseProperty("Parent")]
+		public virtual List<EfAccount> Accounts { get; set;}
+		[InverseProperty("Account")]
+		public virtual List<EfEntry> Entries { get; set;}
 	}
 }

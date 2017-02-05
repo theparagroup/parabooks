@@ -15,9 +15,6 @@ namespace com.theparagroup.parabooks.models.Ef
 		}
 #endif
 
-		public DbSet<EfTransactionType> TransactionTypes { get; set; }
-		public DbSet<EfTransaction> Transactions { get; set; }
-		public DbSet<EfEntry> Entries { get; set; }
 		public DbSet<EfModule> Modules { get; set; }
 		public DbSet<EfBusinessForm> BusinessForms { get; set; }
 		public DbSet<EfNormal> Normals { get; set; }
@@ -25,5 +22,8 @@ namespace com.theparagroup.parabooks.models.Ef
 		public DbSet<EfAccountType> AccountTypes { get; set; }
 		public DbSet<EfAccountTypeBusinessForm> AccountTypeBusinessForms { get; set; }
 		public DbSet<EfAccount> Accounts { get; set; }
+		public DbSet<EfTransactionType> TransactionTypes { get; set; }
+		public DbSet<EfTransaction> Transactions { get; set; }
+		public DbSet<EfEntry> Entries { get; set; }
 	}
 }

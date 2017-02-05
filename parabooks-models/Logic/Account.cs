@@ -7,33 +7,52 @@ namespace com.theparagroup.parabooks.models
 {
 	public partial class Account
 	{
-        public static void Enumerate(EfAccountType accountType, Action<EfAccount, EfAccount, Stack<EfAccount>> lambda)
+        //note: the parent in the lambda is the 'walking' parent, and may not be the same as the account.Parent
+        public static void Enumerate(EfAccountType accountType, Action<EfAccount, EfAccount, bool, bool, Stack<EfAccount>> lambda)
         {
             using (var db = new DbContext())
             {
-                var accounts = (from a in db.Accounts.Include("AccountType").Include("Parent.AccountType") where a.AccountTypeId == accountType.Id && ((a.ParentAccountTypeId==null && a.ParentAccountId==null) || (a.AccountTypeId!=a.ParentAccountTypeId)) select a).ToList();
+                var accounts = (from a in db.Accounts.Include("AccountType").Include("Parent.AccountType") where a.AccountTypeId == accountType.Id && (a.Parent==null || (a.Parent!=null && a.AccountType!=a.Parent.AccountType)) select a).ToList();
 
                 foreach (var a in accounts)
                 {
                     var accountStack = new Stack<EfAccount>();
-                    Enumerate(db, accountStack, null, a, lambda);
+                    Enumerate(db, accountStack, accountType, null, a, lambda);
                 }
             }
         }
 
-        private static void Enumerate(DbContext db, Stack<EfAccount> accountStack, EfAccount parent, EfAccount account, Action<EfAccount, EfAccount, Stack<EfAccount>> lambda)
+        private static void Enumerate(DbContext db, Stack<EfAccount> accountStack, EfAccountType accountType, EfAccount parent, EfAccount account, Action<EfAccount, EfAccount, bool, bool, Stack<EfAccount>> lambda)
         {
             accountStack.Push(account);
 
-            lambda(parent, account, accountStack);
+            bool xFiled = false;
+            bool xBooked = false;
 
-            var parentAccountTypeId = account?.AccountTypeId;
-            var parentAccountId = account?.AccountId;
-            var accounts = (from a in db.Accounts where a.ParentAccountTypeId == parentAccountTypeId && a.ParentAccountId == parentAccountId select a).ToList();
+            //account's type matches what we're walking
+            if ((account.AccountTypeId == accountType.Id))
+            {
+                //but account's parent type doesn't match what we're walking
+                if ((account.Parent != null) && (account.Parent.AccountTypeId != accountType.Id))
+                {
+                    xFiled = true;
+                }
+
+            }
+            else
+            {
+                //doesn't match what we're walking
+                xBooked = true;
+            }
+
+            lambda(parent, account, xFiled, xBooked, accountStack);
+
+            var parentId = account?.Id;
+            var accounts = (from a in db.Accounts where a.ParentId == parentId select a).ToList();
 
             foreach (var a in accounts)
             {
-                Enumerate(db, accountStack, account, a, lambda);
+                Enumerate(db, accountStack, accountType, account, a, lambda);
             }
 
             accountStack.Pop();

@@ -21,9 +21,9 @@ SET IDENTITY_INSERT account_types OFF;
 SET IDENTITY_INSERT accounts ON;
 
 --Liabilities/Current/Notes Payable
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (211, 10, 1, 'Loans from Equity Holders'); 
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (20100, 211, 1, 'Loans from Equity Holders'); 
 --Liabilities/Long-Term/Notes Payable
-INSERT INTO accounts (account_type_id, account_id, virtual, name) VALUES (22, 10, 1, 'Loans from Equity Holders'); 
+INSERT INTO accounts (id, account_type_id, virtual, name) VALUES (20200, 22, 1, 'Loans from Equity Holders'); 
 
 SET IDENTITY_INSERT accounts OFF;
 

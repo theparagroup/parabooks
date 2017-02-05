@@ -20,28 +20,21 @@ namespace parabooks_test
 
             AccountType.Enumerate((accountType, accountTypeStack) =>
             {
+                int pad = 5;
+
                 string details = $"({(accountType.NormalId == 0 ? "dn" : "cn")}:{(accountType.Nominal ? "t" : "p")})";
 
-                Console.WriteLine($"{new string('\t', accountTypeStack.Count)}{accountType.Id.ToString().PadRight(4,'0')} - {accountType.Name.ToUpper()} : {details} ");
+                Console.WriteLine($"{new string('\t', accountTypeStack.Count)}{accountType.Id.ToString().PadRight(pad, '0')} - {accountType.Name.ToUpper()} : {details} ");
 
-                Account.Enumerate(accountType, (parent, account, accountStack) =>
+                Account.Enumerate(accountType, (parent, account, xFiled, xBooked, accountStack) =>
                 {
-                    string linked = "";
+                    string booked = "";
+                    if (xBooked) booked = $"(BOOKED to {account.AccountTypeId.ToString().PadRight(pad, '0')})";
 
-                    if ((account.ParentAccountId.HasValue)&&(account.AccountTypeId!=account.ParentAccountTypeId))
-                    {
-                        if (account.AccountTypeId==accountType.Id)
-                        {
-                            linked = $"(displayed under {account.ParentAccountTypeId}-{account.ParentAccountId})";
-                        }
-                        else
-                        {
-                            linked = $"(booked to {account.AccountTypeId})";
-                        }
-                    }
+                    string displayed = "";
+                    if (xFiled) displayed= $"(FILED under {account.Parent.AccountTypeId.ToString().PadRight(pad, '0')}-{account.Parent.Id})";
 
-
-                    Console.WriteLine($"{new string('\t', accountTypeStack.Count + accountStack.Count())}{(account.Virtual?"*":"")}{account.AccountTypeId}-{account.AccountId} : {account.Name} {linked}");
+                    Console.WriteLine($"{new string('\t', accountTypeStack.Count + accountStack.Count())}{(account.Virtual ? "*" : "")}{account.AccountTypeId.ToString().PadRight(pad, '0')}-{account.Id} : {account.Name} {booked} {displayed}");
                 });
 
             });
