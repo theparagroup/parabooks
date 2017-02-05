@@ -7,7 +7,7 @@ namespace com.theparagroup.parabooks.models
 {
 	public partial class AccountType
 	{
-        public static void Enumerate(Action<EfAccountType, Stack<EfAccountType>> lambda)
+        public static void Enumerate(Action<EfAccountType, Stack<EfAccountType>, bool> lambda)
         {
             using (var db = new DbContext())
             {
@@ -16,7 +16,7 @@ namespace com.theparagroup.parabooks.models
             }
         }
 
-        private static void Enumerate(DbContext db, Stack<EfAccountType> accountTypesStack, EfAccountType accountType, Action<EfAccountType, Stack<EfAccountType>> lambda)
+        private static void Enumerate(DbContext db, Stack<EfAccountType> accountTypesStack, EfAccountType accountType, Action<EfAccountType, Stack<EfAccountType>, bool> lambda)
         {
 
             var parentId = accountType?.Id;
@@ -25,8 +25,9 @@ namespace com.theparagroup.parabooks.models
             foreach (var at in accountTypes)
             {
                 accountTypesStack.Push(at);
-                lambda(at, accountTypesStack);
+                lambda(at, accountTypesStack, true);
                 Enumerate(db, accountTypesStack, at, lambda);
+                lambda(at, accountTypesStack, false);
                 accountTypesStack.Pop();
             }
 

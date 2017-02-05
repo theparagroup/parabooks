@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccountTypes.cs" />
+    <Compile Include="CanonicalAccounts.cs" />
     <Compile Include="CanonicalAccountTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.theparagroup.parabooks
 {
-    public class CanonicalAccountTypes
+    public class CanonicalAccountTypes2
     {
         /*
            select 'public const int ' + ISNULL(REPLACE(a2.name, ' ', '') + '_','') + REPLACE(a1.name, ' ', '') + ' = ' +cast(a1.id as varchar) +  ';'  

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.theparagroup.parabooks
 {
-    public class AccountTypes
+    public class AccountTypes2
     {
 
         /*

@@ -8,7 +8,7 @@ namespace com.theparagroup.parabooks.models
 	public partial class Account
 	{
         //note: the parent in the lambda is the 'walking' parent, and may not be the same as the account.Parent
-        public static void Enumerate(EfAccountType accountType, Action<EfAccount, EfAccount, bool, bool, Stack<EfAccount>> lambda)
+        public static void Enumerate(EfAccountType accountType, Action<EfAccount, EfAccount, bool, bool, bool, Stack<EfAccount>> lambda)
         {
             using (var db = new DbContext())
             {
@@ -22,7 +22,7 @@ namespace com.theparagroup.parabooks.models
             }
         }
 
-        private static void Enumerate(DbContext db, Stack<EfAccount> accountStack, EfAccountType accountType, EfAccount parent, EfAccount account, Action<EfAccount, EfAccount, bool, bool, Stack<EfAccount>> lambda)
+        private static void Enumerate(DbContext db, Stack<EfAccount> accountStack, EfAccountType accountType, EfAccount parent, EfAccount account, Action<EfAccount, EfAccount, bool, bool, bool, Stack<EfAccount>> lambda)
         {
             accountStack.Push(account);
 
@@ -45,7 +45,7 @@ namespace com.theparagroup.parabooks.models
                 xBooked = true;
             }
 
-            lambda(parent, account, xFiled, xBooked, accountStack);
+            lambda(parent, account, xFiled, xBooked, true, accountStack);
 
             var parentId = account?.Id;
             var accounts = (from a in db.Accounts where a.ParentId == parentId select a).ToList();
@@ -54,6 +54,8 @@ namespace com.theparagroup.parabooks.models
             {
                 Enumerate(db, accountStack, accountType, account, a, lambda);
             }
+
+            lambda(parent, account, xFiled, xBooked, false, accountStack);
 
             accountStack.Pop();
 
