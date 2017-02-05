@@ -51,6 +51,7 @@
     <Compile Include="AccountType.cs" />
     <Compile Include="AccountTypeBusinessForm.cs" />
     <Compile Include="BusinessForm.cs" />
+    <Compile Include="Custom\CanonicalAccounts.cs" />
     <Compile Include="Ef\DbContext.cs" />
     <Compile Include="Ef\EfAccount.cs" />
     <Compile Include="Ef\EfAccountType.cs" />
@@ -100,9 +101,7 @@
       <Name>paralib-dal</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Custom\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

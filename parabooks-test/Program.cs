@@ -18,7 +18,7 @@ namespace parabooks_test
             //com.theparagroup.parabooks.models.Example.Chart.Enumerate();
             //com.theparagroup.parabooks.models.Chart.Enumerate();
 
-            AccountType.Enumerate((accountType, accountTypeStack, beforeAT) =>
+            AccountType.Enumerate((accountType, beforeAT, accountTypeStack) =>
             {
                 if (beforeAT)
                 {
