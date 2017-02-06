@@ -41,7 +41,7 @@ namespace com.theparagroup.parabooks.models
 
 					}
 
-					public static class NOTESRECEIVABLE
+					public static class NOTESRECEIVABLECURRENT
 					{
 						public static readonly int Id = 1115;
 
@@ -77,7 +77,7 @@ namespace com.theparagroup.parabooks.models
 				{
 					public static readonly int Id = 115;
 
-					public static class NOTESRECEIVABLE
+					public static class NOTESRECEIVABLELONGTERM
 					{
 						public static readonly int Id = 1151;
 
@@ -168,6 +168,12 @@ namespace com.theparagroup.parabooks.models
 			public static class LONGTERMLIABILITIES
 			{
 				public static readonly int Id = 22;
+
+				public static class NOTESPAYABLELONGTERM
+				{
+					public static readonly int Id = 221;
+
+				}
 
 			}
 

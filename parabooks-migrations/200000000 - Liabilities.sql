@@ -14,6 +14,7 @@ INSERT INTO account_types (id, name, normal_id, nominal) VALUES (2, 'Liabilities
 				INSERT INTO account_types (id, parent_id, name) VALUES (21225, 2122, 'FUTA');
 
 	INSERT INTO account_types (id, parent_id, name) VALUES (22, 2, 'Long-Term Liabilities');
+		INSERT INTO account_types (id, parent_id, name) VALUES (221, 22, 'Notes Payable - Long-Term');
 
 SET IDENTITY_INSERT account_types OFF;
 

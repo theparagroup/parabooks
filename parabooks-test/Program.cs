@@ -22,7 +22,7 @@ namespace parabooks_test
             {
                 if (beforeAT)
                 {
-                    int pad = 5;
+                    int pad = 0;
 
                     string details = $"({(accountType.NormalId == 0 ? "dn" : "cn")}:{(accountType.Nominal ? "t" : "p")})";
 
