@@ -259,6 +259,18 @@ namespace com.theparagroup.parabooks.models
 
 				}
 
+				public static class MEALSENTERTAINMENT
+				{
+					public static readonly int Id = 612;
+
+				}
+
+				public static class OTHEREXPENSES
+				{
+					public static readonly int Id = 613;
+
+				}
+
 			}
 
 			public static class DEPRECIATIONEXPENSE
