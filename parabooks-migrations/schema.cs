@@ -165,6 +165,9 @@ namespace com.theparagroup.parabooks.migrations
             Alter.Table("account_types").AlterColumn("nominal").AsParaType(ParaTypes.Bool).NotNullable();
             Alter.Table("account_types").AlterColumn("normal_id").AsParaType(ParaTypes.Key).NotNullable();
 
+            Execute.Sql("DBCC CHECKIDENT (account_types, RESEED, 90000)");
+
+
             return;
 
         }
@@ -231,47 +234,6 @@ namespace com.theparagroup.parabooks.migrations
     }
 
 
-    /*
-    [Migration(000000000001)]
-    public class InitialSchema : Migration
-    {
-        public override void Down()
-        {
-            int x = 999999999;
-            Delete.Table("accounts");
-            Delete.Table("account_types");
-            Delete.Table("modules");
-        }
-
-        public override void Up()
-        {
-            Create.Table("modules")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
-                .WithColumn("name").AsParaType(ParaTypes.Name);
-
-
-            Create.Table("account_types")
-                .WithColumn("module_id").AsParaType(ParaTypes.Key).PrimaryKey().ForeignKey("modules","id")
-                .WithColumn("canonical_id").AsParaType(ParaTypes.Key).PrimaryKey()
-                .WithColumn("parent_module_id").AsParaType(ParaTypes.Key).Nullable()
-                .WithColumn("parent_canonical_id").AsParaType(ParaTypes.Key).Nullable()
-                .WithColumn("name").AsParaType(ParaTypes.Name);
-
-            Create.ForeignKey("FK_account_types_to_account_types").FromTable("account_types").ForeignColumns("parent_module_id", "parent_canonical_id").ToTable("account_types").PrimaryColumns("module_id", "canonical_id");
-
-
-            Create.Table("accounts")
-                .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey()
-                .WithColumn("module_id").AsParaType(ParaTypes.Key)
-                .WithColumn("canonical_id").AsParaType(ParaTypes.Key)
-                .WithColumn("name").AsParaType(ParaTypes.Name);
-
-            Create.ForeignKey("FK_accounts_to_account_types").FromTable("accounts").ForeignColumns("module_id", "canonical_id").ToTable("account_types").PrimaryColumns("module_id", "canonical_id");
-
-
-
-        }
-    }*/
-
+   
 
 }
