@@ -22,27 +22,54 @@ namespace com.theparagroup.parabooks.models
             }
         }
 
+
         private static void Enumerate(DbContext db, Stack<EfAccount> accountStack, EfAccountType accountType, EfAccount parent, EfAccount account, Action<EfAccount, EfAccount, bool, bool, bool, Stack<EfAccount>> lambda)
         {
+            /*
+                We always enumate accounts in the context of an account type (the 'walking account type').
+
+                If an account is "virtual", it only is used for organization and should not have entries booked to it.
+
+                If an account is "contra", then (regardless of account type), it is always booked against the parent.
+                Contra accounts should have the same normality as the parent, but carry an oppositer or zero balance.
+                Contra accounts can be xFiled, but never XBooked.
+
+                When a non-contra account's actual type doesn't match the walking account, then it is xBooked 
+                (parented here booked to another type). Top-level accounts (no parent) can never be xBooked.
+
+                When a child account's type does match the walking type, but the parent type is different, then it is xFiled 
+                (booked here but parented somewhere else).
+
+            */
+
+
+
             accountStack.Push(account);
 
             bool xFiled = false;
             bool xBooked = false;
 
-            //account's type matches what we're walking
+            //account's type DOES match the accountType we're walking
             if ((account.AccountTypeId == accountType.Id))
             {
-                //but account's parent type doesn't match what we're walking
+                //but account's parent type DOES NOT match what we're walking
                 if ((account.Parent != null) && (account.Parent.AccountTypeId != accountType.Id))
                 {
+                    //this can only happen for child accounts of course
                     xFiled = true;
                 }
 
             }
             else
             {
-                //doesn't match what we're walking
-                xBooked = true;
+                //account's type DOES NOT match the accountType we're walking
+                //contra accounts are never 'xBooked'
+                if (!account.AccountType.Contra)
+                {
+                    //this can only happen for child accounts because top-level accounts
+                    //only appear when walking thier type
+                    xBooked = true;
+                }
             }
 
             lambda(parent, account, xFiled, xBooked, true, accountStack);

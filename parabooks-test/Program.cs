@@ -26,7 +26,7 @@ namespace parabooks_test
 
                     string details = $"({(accountType.NormalId == 0 ? "dn" : "cn")}:{(accountType.Nominal ? "t" : "p")})";
 
-                    Console.WriteLine($"{new string('\t', accountTypeStack.Count)}{accountType.Id.ToString().PadRight(pad, '0')} - {accountType.Name.ToUpper()} : {details} ");
+                    Console.WriteLine($"{new string('\t', accountTypeStack.Count)}{(accountType.Contra ? "~" : "")}{accountType.Id.ToString().PadRight(pad, '0')} - {accountType.Name.ToUpper()} : {details} ");
 
                     Account.Enumerate(accountType, (parent, account, xFiled, xBooked, beforeA, accountStack) =>
                     {

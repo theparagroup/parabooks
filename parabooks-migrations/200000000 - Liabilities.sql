@@ -1,6 +1,6 @@
 ﻿SET IDENTITY_INSERT account_types ON;
 
-INSERT INTO account_types (id, name, normal_id, nominal) VALUES (2, 'Liabilities', 1, 0);
+INSERT INTO account_types (id, name, normal_id, nominal) VALUES (2, 'Liabilities', 1, 0); --credit normal
 	INSERT INTO account_types (id, parent_id, name) VALUES (21, 2, 'Current Liabilities');
 		INSERT INTO account_types (id, parent_id, name) VALUES (211, 21, 'Notes Payable - Current');
 

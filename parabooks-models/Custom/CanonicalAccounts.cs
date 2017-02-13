@@ -65,6 +65,12 @@ namespace com.theparagroup.parabooks.models
 				{
 					public static readonly int Id = 113;
 
+					public static class SECTION179ACCUMULATEDDEPRECIATION
+					{
+						public static readonly int Id = 1131;
+
+					}
+
 				}
 
 				public static class ACCUMULATEDAMORTIZATION
@@ -276,6 +282,12 @@ namespace com.theparagroup.parabooks.models
 			public static class DEPRECIATIONEXPENSE
 			{
 				public static readonly int Id = 68;
+
+				public static class SECTION179DEPRECIATIONEXPENSE
+				{
+					public static readonly int Id = 681;
+
+				}
 
 			}
 
