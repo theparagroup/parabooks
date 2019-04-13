@@ -178,7 +178,7 @@ namespace com.theparagroup.parabooks.migrations
             cmd.Transaction = transaction;
             cmd.CommandText = "select * from account_types where parent_id is null";
             var reader = cmd.ExecuteReader();
-            var ids = new List<long>();
+            var ids = new List<long>(); 
             while (reader.Read()) { ids.Add((long)reader["id"]); }
             reader.Close();
 
