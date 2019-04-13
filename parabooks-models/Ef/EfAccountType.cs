@@ -7,18 +7,17 @@ namespace com.theparagroup.parabooks.models.Ef
 {
 	public partial class EfAccountType:AccountType
 	{
-		[ForeignKey("ParentId")]
-		public virtual EfAccountType Parent { get; set;}
-		[ForeignKey("MethodId")]
 		public virtual EfMethod Method { get; set;}
-		[ForeignKey("ModuleId")]
 		public virtual EfModule Module { get; set;}
-		[ForeignKey("NormalId")]
 		public virtual EfNormal Normal { get; set;}
+		public virtual EfAccountType Parent { get; set;}
+
 		[InverseProperty("AccountType")]
 		public virtual List<EfAccountTypeBusinessForm> AccountTypeBusinessForms { get; set;}
+
 		[InverseProperty("Parent")]
 		public virtual List<EfAccountType> AccountTypes { get; set;}
+
 		[InverseProperty("AccountType")]
 		public virtual List<EfAccount> Accounts { get; set;}
 	}

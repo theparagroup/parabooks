@@ -18,11 +18,12 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class TransactionMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
 
+		[ForeignKey("TransactionType")]
 		[Display(Name="Transaction Type Id")]
 		[Required(ErrorMessage="Transaction Type Id is required")]
 		public object TransactionTypeId;

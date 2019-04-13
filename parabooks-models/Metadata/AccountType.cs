@@ -18,7 +18,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class AccountTypeMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
@@ -26,6 +26,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Display(Name="Guid")]
 		public object Guid;
 
+		[ForeignKey("Parent")]
 		[Display(Name="Parent Id")]
 		public object ParentId;
 
@@ -42,6 +43,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[StringLength(128)]
 		public object Description;
 
+		[ForeignKey("Normal")]
 		[Display(Name="Normal Id")]
 		[Required(ErrorMessage="Normal Id is required")]
 		public object NormalId;
@@ -54,9 +56,11 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Required(ErrorMessage="Contra is required")]
 		public object Contra;
 
+		[ForeignKey("Method")]
 		[Display(Name="Method Id")]
 		public object MethodId;
 
+		[ForeignKey("Module")]
 		[Display(Name="Module Id")]
 		[Required(ErrorMessage="Module Id is required")]
 		public object ModuleId;

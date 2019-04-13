@@ -18,7 +18,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class TransactionTypeMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
@@ -31,6 +31,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[StringLength(64)]
 		public object Name;
 
+		[ForeignKey("Module")]
 		[Display(Name="Module Id")]
 		[Required(ErrorMessage="Module Id is required")]
 		public object ModuleId;

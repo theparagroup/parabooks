@@ -9,6 +9,7 @@ namespace com.theparagroup.parabooks.models.Ef
 	{
 		[InverseProperty("Module")]
 		public virtual List<EfAccountType> AccountTypes { get; set;}
+
 		[InverseProperty("Module")]
 		public virtual List<EfTransactionType> TransactionTypes { get; set;}
 	}

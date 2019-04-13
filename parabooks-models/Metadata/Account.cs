@@ -18,15 +18,17 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class AccountMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
 
+		[ForeignKey("AccountType")]
 		[Display(Name="Account Type Id")]
 		[Required(ErrorMessage="Account Type Id is required")]
 		public object AccountTypeId;
 
+		[ForeignKey("Parent")]
 		[Display(Name="Parent Id")]
 		public object ParentId;
 

@@ -7,9 +7,7 @@ namespace com.theparagroup.parabooks.models.Ef
 {
 	public partial class EfAccountTypeBusinessForm:AccountTypeBusinessForm
 	{
-		[ForeignKey("AccountTypeId")]
 		public virtual EfAccountType AccountType { get; set;}
-		[ForeignKey("BusinessFormId")]
 		public virtual EfBusinessForm BusinessForm { get; set;}
 	}
 }

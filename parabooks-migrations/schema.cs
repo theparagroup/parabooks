@@ -178,8 +178,8 @@ namespace com.theparagroup.parabooks.migrations
             cmd.Transaction = transaction;
             cmd.CommandText = "select * from account_types where parent_id is null";
             var reader = cmd.ExecuteReader();
-            var ids = new List<int>();
-            while (reader.Read()) { ids.Add((int)reader["id"]); }
+            var ids = new List<long>();
+            while (reader.Read()) { ids.Add((long)reader["id"]); }
             reader.Close();
 
             foreach (int id in ids)
@@ -191,12 +191,12 @@ namespace com.theparagroup.parabooks.migrations
 
         private class AccountType
         {
-            public int Id;
-            public int NormalId;
+            public long Id;
+            public long NormalId;
             public bool Nominal;
         }
 
-        protected static void DenormalizeAccountTypes(System.Data.IDbConnection connection, System.Data.IDbTransaction transaction, int parentId)
+        protected static void DenormalizeAccountTypes(System.Data.IDbConnection connection, System.Data.IDbTransaction transaction, long parentId)
         {
             var cmd = connection.CreateCommand();
             cmd.Transaction = transaction;
@@ -210,8 +210,8 @@ namespace com.theparagroup.parabooks.migrations
             while (reader.Read())
             {
                 var at = new AccountType();
-                at.Id = (int)reader["id"];
-                at.NormalId = (int)reader["pnid"];
+                at.Id = (long)reader["id"];
+                at.NormalId = (long)reader["pnid"];
                 at.Nominal = (bool)reader["pn"];
                 ats.Add(at);
             }

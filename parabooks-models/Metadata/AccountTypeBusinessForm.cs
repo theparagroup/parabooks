@@ -19,11 +19,13 @@ namespace com.theparagroup.parabooks.models.Metadata
 	{
 
 		[Key, Column(Order = 0)]
+		[ForeignKey("AccountType")]
 		[Display(Name="Account Type Id")]
 		[Required(ErrorMessage="Account Type Id is required")]
 		public object AccountTypeId;
 
 		[Key, Column(Order = 1)]
+		[ForeignKey("BusinessForm")]
 		[Display(Name="Business Form Id")]
 		[Required(ErrorMessage="Business Form Id is required")]
 		public object BusinessFormId;

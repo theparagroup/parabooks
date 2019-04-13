@@ -7,8 +7,8 @@ namespace com.theparagroup.parabooks.models.Ef
 {
 	public partial class EfTransaction:Transaction
 	{
-		[ForeignKey("TransactionTypeId")]
 		public virtual EfTransactionType TransactionType { get; set;}
+
 		[InverseProperty("Transaction")]
 		public virtual List<EfEntry> Entries { get; set;}
 	}

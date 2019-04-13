@@ -18,11 +18,12 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class EntryMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
 
+		[ForeignKey("Transaction")]
 		[Display(Name="Transaction Id")]
 		[Required(ErrorMessage="Transaction Id is required")]
 		public object TransactionId;
@@ -30,6 +31,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Display(Name="Reference")]
 		public object Reference;
 
+		[ForeignKey("Account")]
 		[Display(Name="Account Id")]
 		[Required(ErrorMessage="Account Id is required")]
 		public object AccountId;

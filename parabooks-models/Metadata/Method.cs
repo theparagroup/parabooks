@@ -18,7 +18,7 @@ namespace com.theparagroup.parabooks.models.Metadata
 	public class MethodMetadata
 	{
 
-		[Key, Column(Order = 0)]
+		[Key]
 		[Display(Name="Id")]
 		[Required(ErrorMessage="Id is required")]
 		public object Id;
