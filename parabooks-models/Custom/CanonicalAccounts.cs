@@ -125,7 +125,7 @@ namespace com.theparagroup.parabooks.models
 				{
 					public static readonly long Id = 212;
 
-					public static class SALESTAXES
+					public static class SALESTAX
 					{
 						public static readonly long Id = 2121;
 

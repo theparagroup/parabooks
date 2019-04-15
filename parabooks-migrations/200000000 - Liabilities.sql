@@ -5,7 +5,7 @@ INSERT INTO account_types (id, name, normal_id, nominal) VALUES (2, 'Liabilities
 		INSERT INTO account_types (id, parent_id, name) VALUES (211, 21, 'Notes Payable - Current');
 
 		INSERT INTO account_types (id, parent_id, name) VALUES (212, 21, 'Taxes');
-			INSERT INTO account_types (id, parent_id, name) VALUES (2121, 212, 'Sales Taxes');
+			INSERT INTO account_types (id, parent_id, name) VALUES (2121, 212, 'Sales Tax');
 			INSERT INTO account_types (id, parent_id, name) VALUES (2122, 212, 'Payroll Taxes');
 				INSERT INTO account_types (id, parent_id, name) VALUES (21221, 2122, 'Income Taxes Withheld');
 				INSERT INTO account_types (id, parent_id, name) VALUES (21222, 2122, 'Social Security Withheld');
