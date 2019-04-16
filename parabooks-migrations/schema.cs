@@ -123,7 +123,8 @@ namespace com.theparagroup.parabooks.migrations
                     .WithColumn("virtual").AsParaType(ParaTypes.Bool) //a folder
                     .WithColumn("number").AsParaType(ParaTypes.Name).Nullable()
                     .WithColumn("name").AsParaType(ParaTypes.Name)
-                    .WithColumn("description").AsParaType(ParaTypes.Description).Nullable();
+                    .WithColumn("description").AsParaType(ParaTypes.Description).Nullable()
+                    .WithColumn("notes").AsParaType(ParaTypes.Note).Nullable();
 
             Create.Table("transaction_types")
                 .WithColumn("id").AsParaType(ParaTypes.Key).PrimaryKey().Identity()

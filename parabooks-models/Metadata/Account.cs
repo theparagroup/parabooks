@@ -48,5 +48,9 @@ namespace com.theparagroup.parabooks.models.Metadata
 		[Display(Name="Description")]
 		[StringLength(128)]
 		public object Description;
+
+		[Display(Name="Notes")]
+		[StringLength(512)]
+		public object Notes;
 	}
 }
