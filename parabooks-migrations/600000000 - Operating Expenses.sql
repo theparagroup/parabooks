@@ -13,6 +13,7 @@ INSERT INTO account_types (id,  name, normal_id, nominal) VALUES (6, 'Operating 
 			INSERT INTO account_types (id,  parent_id, name) VALUES (6117, 611, 'SUTA');
 		INSERT INTO account_types (id,  parent_id, name) VALUES (612, 61, 'Meals & Entertainment'); --50% on Schedule C, Line 24
 		INSERT INTO account_types (id,  parent_id, name) VALUES (613, 61, 'Other Expenses'); --100% on  on Schedule C, Line 27
+		INSERT INTO account_types (id,  parent_id, name) VALUES (614, 61, 'Other Taxes'); 
 	INSERT INTO account_types (id,  parent_id, name) VALUES (68, 6, 'Depreciation Expense');
 		INSERT INTO account_types (id,  parent_id, name) VALUES (681, 68, 'Section 179 Depreciation Expense');
 	INSERT INTO account_types (id,  parent_id, name) VALUES (69, 6, 'Amortization Expense');

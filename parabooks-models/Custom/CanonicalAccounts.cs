@@ -283,6 +283,12 @@ namespace com.theparagroup.parabooks.models
 
 				}
 
+				public static class OTHERTAXES
+				{
+					public static readonly long Id = 614;
+
+				}
+
 			}
 
 			public static class DEPRECIATIONEXPENSE
