@@ -175,6 +175,12 @@ namespace com.theparagroup.parabooks.models
 
 				}
 
+				public static class WAGESPAYABLE
+				{
+					public static readonly long Id = 90001;
+
+				}
+
 			}
 
 			public static class LONGTERMLIABILITIES
